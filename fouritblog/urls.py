@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from blog.views import RegistrationView, BlogAPIList, UserAPIList, UserAPIUpdate, CommentAPIList, \
-    CommentAPIDetailView, BlogAPIView, BlogAPIUpdate, BlogAPIDestroy, LikeAPIView
+    CommentAPIDetailView, BlogAPIView, LikeAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,11 +31,10 @@ urlpatterns = [
     path('api/userlist/<int:pk>/', UserAPIUpdate.as_view()),
 
     path('api/bloglist/', BlogAPIList.as_view()),
-    path('api/blogview/<int:pk>/', BlogAPIView.as_view()),
-    path('api/blogupdate/<int:pk>/', BlogAPIUpdate.as_view()),
-    path('api/blogdestroy/<int:pk>/', BlogAPIDestroy.as_view()),
+    path('api/bloglist/<int:pk>/', BlogAPIView.as_view()),
 
     path('api/commentlist/', CommentAPIList.as_view()),
     path('api/commentlist/<int:pk>/', CommentAPIDetailView.as_view()),
+
     path('api/commentlike/<int:pk>/', LikeAPIView.as_view()),
 ]
