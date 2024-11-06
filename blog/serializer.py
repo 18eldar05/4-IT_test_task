@@ -19,6 +19,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError({"Ошибка": "Пароли не совпадают"})
 
+        if len(password) < 8:
+            raise serializers.ValidationError({"Ошибка": "Пароль должен быть не меньше 8 символов"})
+
         if User.objects.filter(email=self.validated_data['email']).exists():
             raise serializers.ValidationError({"Ошибка": "такой email уже зарегистрирован"})
 
@@ -30,6 +33,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Blog
         fields = "__all__"
@@ -42,6 +47,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Comment
         fields = "__all__"
